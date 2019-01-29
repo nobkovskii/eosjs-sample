@@ -1,12 +1,50 @@
 # eosio sample project
 
-
 node app.js
 http://localhost:3000/
 
 ## How to use
-https://github.com/EOSIO/eosjs-api/blob/master/docs/api.md
+https://github.com/EOSIO/eosjs/tree/v16.0.9
 
+## Own PC
+MacBook Pro macOS High Sierra v10.13.6
+
+## Make dir
+```
+mkdir eos
+cd eos
+```
+
+## Docker Image Pull
+```
+docker pull eosio/eos
+ 
+Using default tag: latest
+latest: Pulling from eosio/eos
+6b98dfc16071: Pull complete 
+4001a1209541: Pull complete 
+6319fc68c576: Pull complete 
+b24603670dc3: Pull complete 
+97f170c87c6f: Pull complete 
+ca8277dae3e4: Pull complete 
+49bdd58b12e0: Pull complete 
+5896b4da3447: Pull complete 
+bf8386c62bcb: Pull complete 
+cd61f928e299: Pull complete 
+9c02fa6a4b63: Pull complete 
+1f2e1679c160: Pull complete 
+Digest: sha256:ab8ba16ee8308316e570b79da3beaf0d60975633afb1a4b9bc0eb4506e1ee6ee
+Status: Downloaded newer image for eosio/eos:latest
+```
+
+## npm install
+```
+npm init
+npm install --save ejs
+npm install --save eosjs
+npm install --save express
+npm install --save basic-auth-connect
+```
 
 ## Docker Container Run
 ```
@@ -21,6 +59,8 @@ docker run --name eosio \
   /bin/bash -c \
   "keosd --http-server-address=0.0.0.0:5555 & exec nodeos -e -p eosio --plugin eosio::producer_plugin --plugin eosio::history_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_plugin --plugin eosio::history_api_plugin --plugin eosio::http_plugin -d /mnt/dev/data --config-dir /mnt/dev/config --http-server-address=0.0.0.0:7777 --access-control-allow-origin=* --contracts-console --http-validate-host=false --filter-on='*'"
 ```
+※If you already have '/tmp/eosio', it may not work properly.
+In that case, change to an alias name, delete it, or change the command.
 
 ## Set Alias
 ```
@@ -69,8 +109,9 @@ cleos wallet import --private-key 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79z
 ```
 
 ## Create Account
-※同じアカウント名は使えないし、削除できない
+※同じアカウント名は使えないし、削除できない  
 `ex)cleos create account eosio create-account-name your-pubkey`
+
 ```
 cleos create account eosio user1 EOS5~~
 cleos create account eosio user2 EOS5~~
@@ -84,8 +125,8 @@ cleos get accounts EOS5~~
 ```
 
 ## Deploy Smartcontract
-コントラクト用のアカウント作成。
-このアカウントを通じて、コントラクトが実行される。
+コントラクト用のアカウント作成。  
+このアカウントを通じて、コントラクトが実行される。  
 `ex)cleos create account eosio token your-pubkey`
 ```
 cleos create account eosio token EOS5~~
