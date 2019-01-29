@@ -8,8 +8,8 @@ http://localhost:3000/
 https://github.com/EOSIO/eosjs-api/blob/master/docs/api.md
 
 
-
 ## Docker Container Run
+```
 docker run --name eosio \
   --publish 7777:7777 \
   --publish 127.0.0.1:5555:5555 \
@@ -20,59 +20,77 @@ docker run --name eosio \
   eosio/eos-dev \
   /bin/bash -c \
   "keosd --http-server-address=0.0.0.0:5555 & exec nodeos -e -p eosio --plugin eosio::producer_plugin --plugin eosio::history_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_plugin --plugin eosio::history_api_plugin --plugin eosio::http_plugin -d /mnt/dev/data --config-dir /mnt/dev/config --http-server-address=0.0.0.0:7777 --access-control-allow-origin=* --contracts-console --http-validate-host=false --filter-on='*'"
-
+```
 
 ## Set Alias
+```
 alias cleos='docker exec -it eosio /opt/eosio/bin/cleos --url http://127.0.0.1:7777 --wallet-url http://127.0.0.1:5555'
+```
 
 ## Create Wallet & Key pairs
-ex)cleos wallet create -n wallet-name --to-console
+`ex)cleos wallet create -n wallet-name --to-console`
+```
 cleos wallet create -n nobkov --to-console
   Creating wallet: nobkov
   Save password to use in the future to unlock this wallet.
   Without password imported keys will not be retrievable.
   "PW5~~"
+```
 
-ex)cleos create key --to-console
+`ex)cleos create key --to-console`
+```
 cleos create key --to-console
   Private key: 5KS~~
   Public key: EOS5~~
+```
 
-ex)cleos wallet import -n your-wallet-name --private-key your-prikey
+`ex)cleos wallet import -n your-wallet-name --private-key your-prikey`
+```
 cleos wallet import -n nobkov --private-key 5KS~~
   imported private key for: EOS5~~
+```
 
 ## Wallet Open & Unlock
-ex)cleos wallet open -n your-wallet-name
-  cleos wallet open -n nobkov
-ex)cleos wallet unlock -n your-wallet-name
-  cleos wallet unlock -n nobkov
-※your password
+`ex)cleos wallet open -n your-wallet-name`
+```
+cleos wallet open -n nobkov
+```
 
+`ex)cleos wallet unlock -n your-wallet-name`
+```
+cleos wallet unlock -n nobkov
+※your password
+```
 
 ## Import EOSIO-user
+```
 cleos wallet import --private-key 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3 -n nobkov
   imported private key for: EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV  
+```
 
 ## Create Account
 ※同じアカウント名は使えないし、削除できない
-ex)cleos create account eosio create-account-name your-pubkey
+`ex)cleos create account eosio create-account-name your-pubkey`
+```
 cleos create account eosio user1 EOS5~~
 cleos create account eosio user2 EOS5~~
-
+```
 
 
 ## Confirm accounts
-ex)cleos get accounts your-pubkey
-cleos get accounts EOS5
-
+`ex)cleos get accounts your-pubkey`
+```
+cleos get accounts EOS5~~
+```
 
 ## Deploy Smartcontract
 コントラクト用のアカウント作成。
 このアカウントを通じて、コントラクトが実行される。
-ex)cleos create account eosio token your-pubkey
-cleos create account eosio token EOS5
-
+`ex)cleos create account eosio token your-pubkey`
+```
+cleos create account eosio token EOS5~~
+```
+```
 docker ps
  CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                              NAMES
  fe4299d73b3d        eosio/eos-dev       "/bin/bash -c 'keosd…"   11 days ago         Up About an hour    127.0.0.1:5555->5555/tcp, 0.0.0.0:7777->7777/tcp   eosio
@@ -87,23 +105,31 @@ ls -l /eos/contracts/eosio.token/
  -rw-r--r-- 1 root root  2120 Nov 30 20:24 eosio.token.hpp
  -rw-r--r-- 1 root root 18965 Jan 21 07:27 eosio.token.wasm
 exit
-
+```
+```
 cleos set contract token /eos/contracts/eosio.token/ -p token@active
+```
 
 ## Create & Issue Token
-ex)cleos push action token create '[ "eosio", "Maximum-quantity symbol-name"]' -p token@active
+`ex)cleos push action token create '[ "eosio", "Maximum-quantity symbol-name"]' -p token@active`
+```
 cleos push action token create '[ "eosio", "1000000000.0 SYS"]' -p token@active
+```
 
-ex)cleos push action token issue '[ "account-name", "quantity symbol", "memo" ]' -p eosio@active
+`ex)cleos push action token issue '[ "account-name", "quantity symbol", "memo" ]' -p eosio@active`
+```
 cleos push action token issue '[ "user1", "1000.0 SYS", "it is memo." ]' -p eosio@active
-
+```
 
 ## Confirm Token
-ex)cleos get currency balance token account-name symbol
+`ex)cleos get currency balance token account-name symbol`
+```
 cleos get currency balance token user1 SYS
+```
 
 ## Transfer token
-ex)cleos push action token transfer '[ "From:account-name", "To:account-name", "quantity symbol", "memo" ]' -p From:account-name@active
+`ex)cleos push action token transfer '[ "From:account-name", "To:account-name", "quantity symbol", "memo" ]' -p From:account-name@active`
+```
 cleos push action token transfer '[ "user1", "user2", "0.1 SYS", "user1 sends 0.1SYS to user2." ]' -p user1@active
-
+```
 
