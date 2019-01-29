@@ -57,9 +57,6 @@ async function getBlock(info){
   return obj
 }
 
-console.log(eos.pushBlock());
-console.log(eos.pushTransaction());
-
 app.get('/', (request, response) => {
   eos.getInfo({
     // nothing
