@@ -3,6 +3,8 @@
 node app.js
 http://localhost:3000/
 
+![eosjs-demo](https://user-images.githubusercontent.com/43230951/51888967-6f157d00-23db-11e9-9f4c-679445c0003e.gif)
+
 ## How to use
 https://github.com/EOSIO/eosjs/tree/v16.0.9
 
